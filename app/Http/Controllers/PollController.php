@@ -7,6 +7,8 @@ use App\Http\Requests\StorePollRequest;
 use App\Http\Requests\UpdatePollRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\Debugbar\Facades\Debugbar;
+
 
 class PollController extends Controller
 {
@@ -102,8 +104,9 @@ class PollController extends Controller
      * @param  \App\Models\Poll  $poll
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Poll $poll)
+    public function destroy(int $id)
     {
-        //
+        Debugbar::info($id);
+        Poll::destroy($id);
     }
 }

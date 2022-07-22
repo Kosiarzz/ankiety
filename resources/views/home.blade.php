@@ -36,7 +36,7 @@
                 </thead> 
                 <tbody>
                     @forelse($polls as $poll)
-                        <tr class="">
+                        <tr id="poll{{ $poll->id }}">
                             <td>{{ $loop->index+1 }}</td> 
                             <td>{{ $poll->title }}</td> 
                             <td class="text-center text-nowrap">
@@ -63,11 +63,8 @@
                                     <div class="col-auto">
                                         <a href="#" title="Statystyki" role="button" class="btn btn-sm btn-spinner btn-warning"><i class="fa fa-chart-line"></i></a>
                                     </div> 
-                                    <div class="col-auto">
-                                        <a href="#" title="Pytania" role="button" class="btn btn-sm btn-spinner btn-info"><i class="fa fa-question"></i></a>
-                                    </div>
                                     <form class="col">
-                                        <button type="submit" title="Usuń" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="btn btn-sm btn-danger deletePoll" data-route="{{route('poll.destroy', $poll->id)}}" data-id="{{ $poll->id }}"><i class="fa fa-trash"></i></button>
                                     </form>
                                 </div>
                             </td>
@@ -86,4 +83,7 @@
         </div>
     </div>
 </div>
+<script>
+
+</script>
 @endsection

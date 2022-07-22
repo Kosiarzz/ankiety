@@ -24,3 +24,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/home', [App\Http\Controllers\PollController::class, 'index'])->name('poll.index');
 Route::get('/ankieta/nowa', [App\Http\Controllers\PollController::class, 'create'])->name('poll.create');
 Route::post('/ankieta/dodawanie', [App\Http\Controllers\PollController::class, 'store'])->name('poll.store');
+Route::delete('ankieta/usuwanie/{id}', [App\Http\Controllers\PollController::class, 'destroy'])->name('poll.destroy');
