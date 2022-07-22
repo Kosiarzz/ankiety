@@ -59,7 +59,7 @@
                                         <a href="{{route('poll.edit', $poll->id)}}" title="Edytuj" role="button" class="btn btn-sm btn-spinner btn-primary"><i class="fa fa-edit"></i></a>
                                     </div> 
                                     <div class="col-auto">
-                                        <a href="#" title="Statystyki" role="button" class="btn btn-sm btn-spinner btn-warning"><i class="fa fa-chart-line"></i></a>
+                                        <a href="{{route('poll.stats', $poll->id)}}" title="Statystyki" role="button" class="btn btn-sm btn-spinner btn-warning"><i class="fa fa-chart-line"></i></a>
                                     </div> 
                                     <form class="col">
                                         <button type="button" class="btn btn-sm btn-danger deletePoll" data-route="{{route('poll.destroy', $poll->id)}}" data-id="{{ $poll->id }}"><i class="fa fa-trash"></i></button>

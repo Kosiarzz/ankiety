@@ -20,4 +20,9 @@ class Poll extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function entries()
+    {
+        return $this->hasMany(Entry::class);
+    }
 }

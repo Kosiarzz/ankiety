@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Poll, Question};
+use App\Models\{Poll, Question, Entry, Answer};
 use App\Http\Requests\StorePollRequest;
 use App\Http\Requests\UpdatePollRequest;
 use Illuminate\Http\Request;
@@ -118,6 +118,35 @@ class PollController extends Controller
         session()->forget('currentPoll');
 
         return redirect(route('poll.index'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function stats(int $id)
+    {
+        $poll = Poll::where('user_id', Auth::id())->where('id', $id)->with('questions.answers')->get();
+        
+        #$entries = Entry::where('poll_id', $id)->get('id');
+        #$answers = Answer::whereIn('entry_id', $entries)->get();
+        
+        #$yes = Answer::whereIn('entry_id', $entries)->where('answer', 'Tak')->count ();
+        
+        #$text = $answers->whereNot(function ($query) {
+        #    $query->where('answer', 'Yes')
+        #          ->orWhere('answer', 'No');
+        #});
+
+       
+        #$stats = $poll->questions->answers->groupBy('answer')->map->count();
+        
+   
+
+        return view('poll.stats', [
+            'poll' => $poll
+        ]);
     }
 
     /**

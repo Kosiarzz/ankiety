@@ -16,4 +16,9 @@ class Question extends Model
         'order',
         'poll_id',
     ];
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
 }

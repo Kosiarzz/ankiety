@@ -15,7 +15,7 @@
                 <tr id="entry{{ $entry->id }}">
                     <td>{{ $entry->poll->title }}</td> 
                     <td class="text-center text-nowrap">
-                        {{ $entry->created_at }}
+                        {{ date('d-m-Y H:i:s', strtotime($entry->created_at)) }}
                     </td>  
                     <td>
                         <div class="row no-gutters">
