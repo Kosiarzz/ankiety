@@ -55,7 +55,6 @@ class PollController extends Controller
         {
             Question::create([
                 'question' => $question,
-                'answer' => 'x',
                 'type' => $request->type[$key],
                 'order' => $key,
                 'poll_id' => $poll->id,
@@ -110,7 +109,6 @@ class PollController extends Controller
         {
             Question::create([
                 'question' => $question,
-                'answer' => 'x',
                 'type' => $request->type[$key],
                 'order' => $key,
                 'poll_id' => session('currentPoll'),
