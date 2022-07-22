@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Poll, Question, Entry, Answer};
-use App\Http\Requests\StorePollRequest;
-use App\Http\Requests\UpdatePollRequest;
+use App\Http\Requests\UpsertPollRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Support\Str;
 
 
 class PollController extends Controller
@@ -37,15 +37,17 @@ class PollController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePollRequest  $request
+     * @param  \App\Http\Requests\UpsertPollRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UpsertPollRequest $request)
     {
+        $data = $request->validated();
+
         $poll = Poll::create([
             'title' => $request->title,
             'status' => $request->status ? true : false,
-            'slug' => $request->slug,
+            'slug' => Str::slug($request->slug, '-'),
             'user_id' => Auth::id(),
         ]);
 

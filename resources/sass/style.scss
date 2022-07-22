@@ -69,3 +69,33 @@
 tr:nth-child(even){
     background: #f0f0f0;
 }
+
+.error{
+    color:red;
+}
+
+.box-error-alert{
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    width: 250px;
+    height: 40px;
+}
+
+.scrap-alert-message{
+    padding:5px 3px; 
+    margin-bottom:15px; 
+    border-radius:5px; 
+    color: #fff;
+    border-radius:4px;
+    border:1px solid #fff;
+    padding:4px;
+}
+  
+.scrap-alert-message.error{
+    background: #c34a43!important;
+}
+
+.scrap-alert-message.success{
+    background: #62ac6a;
+}

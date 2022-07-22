@@ -8,8 +8,8 @@
     <div class="form-group row align-items-center">
         <label for="slug" class="col-form-label text-md-right col-md-3">Adres ankiety(slug)</label> 
         <div class="col-md-6 col-xl-5">
-            <input wire:model="slug" type="text" id="slug" name="slug" placeholder="Adres ankiety" class="form-control" aria-required="true" aria-invalid="false">
-            {{ $error }}
+            <input wire:model="slug" type="text" id="slug" name="slug" value="" placeholder="Adres ankiety" class="form-control" aria-required="true" aria-invalid="false">
+            <span class="error">{{ $error }}</span>
         </div>
     </div> 
     <div class="form-check row has-success">

@@ -2,7 +2,9 @@
 $(document).ready(function(){
     $(".statusPoll").click(function(){
         var id = $(this).data("id");
+        var status = $(this).data("status")
 
+        console.log(status);
         $.ajax({
             type: 'post',
             headers: {
@@ -13,10 +15,19 @@ $(document).ready(function(){
             id: id
             },
             success: function (response) {
-                var remove = "#time"+id
-                console.log(remove)
-                $(remove).text('text')
-                $(this).data("status", "ddd")
+                var time = ".time"+id
+                
+                //$(remove).text('text')
+                if(status == "on")
+                {
+                    $(time).text("-");
+                    $(this).data("status", "off")
+                }
+                else
+                {
+                    $(time).text("Teraz");
+                    $(this).data("status", "on")
+                }
             }
         });
     

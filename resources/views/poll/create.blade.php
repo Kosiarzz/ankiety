@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-8">
     <form method="POST" action="{{ route('poll.store') }}">
-        @csrf
+        @csrf 
         <div class="card">
             <div class="card-header bg-white">
                 <i class="fa fa-plus"></i> Nowa ankieta
@@ -20,6 +20,10 @@
         </div>
     </form>
 </div>
-
+<div id="scrap-box-alert" class="box-error-alert">
+    @foreach ($errors->all() as $error)
+      <div class="scrap-alert-message error">{{ $error }}</div>
+    @endforeach
+</div>
 @endsection
 

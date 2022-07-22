@@ -16,6 +16,7 @@
                                 <option value="radio" @if($thing['type'] == 'radio') selected @endif>Jednokrotny wybór (Tak/Nie)</option>
                                 <option value="text" @if($thing['type'] == 'text') selected @endif>Odpowiedź tekstowa</option>
                             </select>
+                            @error('type') <span class="error">{{ $message }}</span> <br>@enderror
                         </div>
                     </div> 
                 </div>
@@ -25,7 +26,6 @@
     <div class="row mt-3">
         <div class="d-flex justify-content-end">
             <button wire:click="$emit('questionAdded')" class="btn btn-primary btn-sm" type="button">Dodaj pytanie</button>
-            <button wire:click="$emit('info')" class="btn btn-info btn-sm" type="button">Info</button>
         </div>
     </div>
 </div>

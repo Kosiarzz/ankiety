@@ -19,6 +19,14 @@ class Things extends Component
 
     public function boot()
     {
+        if(old('question'))
+        {   
+            foreach(old('question') as $key => $question)
+            {
+                $this->things[] = ['id' => $key, 'question' => old('question')[$key], 'type'=>old('type')[$key]];
+            }
+        }
+
         if(session('currentPoll') && request()->routeIs('poll.edit') )
         {
             $polls = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->with('questions')->get();
@@ -32,10 +40,6 @@ class Things extends Component
                     $this->things[] = ['id' => $key, 'question' => $question->question, 'type'=>$question->type];
                 }
             }
-        }
-        else
-        {
-            $this->things[] = ['id' => 1, 'question' => '', 'type' => 'radio'];
         }
 
         $this->dasdas = count($this->things);
@@ -51,11 +55,6 @@ class Things extends Component
     public function questionAdded()
     {
         array_push($this->things, ['id' => $this->dasdas++, 'question' => '', 'type' => 'radio']);
-    }
-
-    public function info()
-    {
-       dd($this->things);
     }
 
     public function questionRemove(int $id)

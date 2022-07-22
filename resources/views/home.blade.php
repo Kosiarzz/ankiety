@@ -27,10 +27,10 @@
             <table class="table table-hover table-listing">
                 <thead>
                     <tr>
-                        <th><span class=""></span> Tytuł ankiety</th> 
-                        <th class="text-center"><a><span class="fa"></span> Data opublikowania</a></th> 
-                        <th><a><span class="fa"></span> Status</a></th> 
-                        <th></th>
+                        <th class="text-center"><span class=""></span> Tytuł ankiety</th> 
+                        <th class="text-center"><span class="fa"></span> Data opublikowania</th> 
+                        <th class="text-center"><span class="fa"></span> Status</th> 
+                        <th class="text-center"><span class="fa"></span></th>
                     </tr> 
                 </thead> 
                 <tbody>
@@ -39,21 +39,21 @@
                             <td>{{ $poll->title }}</td> 
                             <td class="text-center text-nowrap time{{ $poll->id }}">
                                 @if($poll->status)
-                                    {{ $poll->updated_at }}
+                                    {{ date('d-m-Y H:i:s', strtotime($poll->updated_at)) }}
                                 @else
                                     -
                                 @endif
                             </td> 
-                            <td>
-                                <div class="form-check form-switch poll-list">
+                            <td class="">
+                                <div class="row form-check form-switch poll-list">
                                     @if($poll->status)
                                         <input class="form-check-input statusPoll" title="włączona" type="checkbox" role="switch" id="flexSwitchCheckDefault" data-route="{{route('poll.status', ['id' => $poll->id, 'status' => 'on'])}}" data-id="{{ $poll->id }}" data-status="on" checked>
                                     @else
-                                        <input class="form-check-input statusPoll" title="wyłączona" type="checkbox" role="switch" id="flexSwitchCheckDefault"data-route="{{route('poll.status', ['id' => $poll->id, 'status' => 'off'])}}" data-id="{{ $poll->id }}" data-status="off">
+                                        <input class="form-check-input statusPoll" title="wyłączona" type="checkbox" role="switch" id="flexSwitchCheckDefault" data-route="{{route('poll.status', ['id' => $poll->id, 'status' => 'off'])}}" data-id="{{ $poll->id }}" data-status="off">
                                     @endif
                                 </div>
                             </td>  
-                            <td>
+                            <td class="">
                                 <div class="row no-gutters">
                                     <div class="col-auto">
                                         <a href="{{route('poll.edit', $poll->id)}}" title="Edytuj" role="button" class="btn btn-sm btn-spinner btn-primary"><i class="fa fa-edit"></i></a>
