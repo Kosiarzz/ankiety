@@ -15,4 +15,9 @@ class Entry extends Model
         'created_at',
         'poll_id',
     ];
+
+    public function poll()
+    {
+        return $this->belongsTo(Poll::class);
+    }
 }

@@ -71,7 +71,7 @@
                         Brak ankiet
                     @endforelse
                         </tbody>
-                    </table>    
+                </table>    
             <div class="row">
                 <div class="col-sm"></div> 
                 <div class="col-sm-auto">

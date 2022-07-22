@@ -31,3 +31,5 @@ Route::post('ankieta/status/{id}/{status}', [App\Http\Controllers\PollController
 
 Route::get('/ankiety/{slug}', [App\Http\Controllers\EntryController::class, 'show'])->name('entry');
 Route::post('/ankieta/wysylanie', [App\Http\Controllers\EntryController::class, 'store'])->name('entry.submit');
+
+Route::get('/wpisy', [App\Http\Controllers\EntryController::class, 'index'])->name('entries');

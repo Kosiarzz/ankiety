@@ -14,7 +14,9 @@ class EntryController extends Controller
      */
     public function index()
     {
+        $entries = Entry::with('poll')->get();
 
+        return view('entries.index', ['entries' => $entries]);
     }
 
     /**
