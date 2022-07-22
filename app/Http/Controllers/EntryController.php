@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Entry, Poll, Answer};
+use Barryvdh\Debugbar\Facades\Debugbar;
 
 class EntryController extends Controller
 {
@@ -47,7 +48,7 @@ class EntryController extends Controller
             $answer = Answer::create([
                 'answer' => $request['answer'.$key],
                 'question_id' => $answer,
-                'entry_id' => $entry->poll_id,
+                'entry_id' => $entry->id,
             ]);
 
         }
@@ -99,6 +100,7 @@ class EntryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Debugbar::info($id);
+        Entry::destroy($id);
     }
 }

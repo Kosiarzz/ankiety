@@ -33,3 +33,4 @@ Route::get('/ankiety/{slug}', [App\Http\Controllers\EntryController::class, 'sho
 Route::post('/ankieta/wysylanie', [App\Http\Controllers\EntryController::class, 'store'])->name('entry.submit');
 
 Route::get('/wpisy', [App\Http\Controllers\EntryController::class, 'index'])->name('entries');
+Route::delete('/wpis/usun/{id}', [App\Http\Controllers\EntryController::class, 'destroy'])->name('entries.destroy');
