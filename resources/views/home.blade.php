@@ -39,7 +39,7 @@
                             <td>{{ $poll->title }}</td> 
                             <td class="text-center text-nowrap time{{ $poll->id }}">
                                 @if($poll->status)
-                                    {{ date('d-m-Y H:i:s', strtotime($poll->updated_at)) }}
+                                    {{ date('d/m/Y H:i:s', strtotime($poll->updated_at)) }}
                                 @else
                                     -
                                 @endif
