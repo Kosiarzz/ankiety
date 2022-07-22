@@ -104,6 +104,22 @@ class PollController extends Controller
      * @param  \App\Models\Poll  $poll
      * @return \Illuminate\Http\Response
      */
+    public function status(int $id, string $status)
+    {
+        Debugbar::info($status);
+        Debugbar::info($id);
+
+        Poll::where('user_id', Auth::id())->where('id', $id)->update([
+            'status' => $status == "on" ? false : true,
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Poll  $poll
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(int $id)
     {
         Debugbar::info($id);

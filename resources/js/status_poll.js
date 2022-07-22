@@ -1,10 +1,10 @@
 
 $(document).ready(function(){
-    $(".deletePoll").click(function(){
+    $(".statusPoll").click(function(){
         var id = $(this).data("id");
 
         $.ajax({
-            type: 'delete',
+            type: 'post',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -13,9 +13,10 @@ $(document).ready(function(){
             id: id
             },
             success: function (response) {
-                var remove = "#poll"+id;
-
-                $(remove).remove();
+                var remove = "#time"+id
+                console.log(remove)
+                $(remove).text('text')
+                $(this).data("status", "ddd")
             }
         });
     

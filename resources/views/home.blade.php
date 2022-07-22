@@ -27,8 +27,7 @@
             <table class="table table-hover table-listing">
                 <thead>
                     <tr>
-                        <th></th> 
-                        <th><span class="fa"></span> Tytuł ankiety</th> 
+                        <th><span class=""></span> Tytuł ankiety</th> 
                         <th class="text-center"><a><span class="fa"></span> Data opublikowania</a></th> 
                         <th><a><span class="fa"></span> Status</a></th> 
                         <th></th>
@@ -37,9 +36,8 @@
                 <tbody>
                     @forelse($polls as $poll)
                         <tr id="poll{{ $poll->id }}">
-                            <td>{{ $loop->index+1 }}</td> 
                             <td>{{ $poll->title }}</td> 
-                            <td class="text-center text-nowrap">
+                            <td class="text-center text-nowrap time{{ $poll->id }}">
                                 @if($poll->status)
                                     {{ $poll->updated_at }}
                                 @else
@@ -49,9 +47,9 @@
                             <td>
                                 <div class="form-check form-switch poll-list">
                                     @if($poll->status)
-                                        <input class="form-check-input" title="włączona" type="checkbox" role="switch" id="flexSwitchCheckDefault" checked>
+                                        <input class="form-check-input statusPoll" title="włączona" type="checkbox" role="switch" id="flexSwitchCheckDefault" data-route="{{route('poll.status', ['id' => $poll->id, 'status' => 'on'])}}" data-id="{{ $poll->id }}" data-status="on" checked>
                                     @else
-                                        <input class="form-check-input" title="wyłączona" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        <input class="form-check-input statusPoll" title="wyłączona" type="checkbox" role="switch" id="flexSwitchCheckDefault"data-route="{{route('poll.status', ['id' => $poll->id, 'status' => 'off'])}}" data-id="{{ $poll->id }}" data-status="off">
                                     @endif
                                 </div>
                             </td>  
