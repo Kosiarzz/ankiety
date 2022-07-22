@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/home', [App\Http\Controllers\PollController::class, 'index'])->name('poll.index');
+Route::get('/ankieta/nowa', [App\Http\Controllers\PollController::class, 'create'])->name('poll.create');
+Route::post('/ankieta/dodawanie', [App\Http\Controllers\PollController::class, 'store'])->name('poll.store');

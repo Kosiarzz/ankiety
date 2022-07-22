@@ -11,7 +11,8 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "3.x"
+        "laravel/ui": "3.x",
+        "livewire/livewire": "^2.10"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
