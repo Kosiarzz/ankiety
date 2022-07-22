@@ -56,7 +56,7 @@
                             <td>
                                 <div class="row no-gutters">
                                     <div class="col-auto">
-                                        <a href="#" title="Edytuj" role="button" class="btn btn-sm btn-spinner btn-primary"><i class="fa fa-edit"></i></a>
+                                        <a href="{{route('poll.edit', $poll->id)}}" title="Edytuj" role="button" class="btn btn-sm btn-spinner btn-primary"><i class="fa fa-edit"></i></a>
                                     </div> 
                                     <div class="col-auto">
                                         <a href="#" title="Statystyki" role="button" class="btn btn-sm btn-spinner btn-warning"><i class="fa fa-chart-line"></i></a>

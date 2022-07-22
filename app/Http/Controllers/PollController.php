@@ -42,7 +42,6 @@ class PollController extends Controller
      */
     public function store(Request $request)
     {
-
         $poll = Poll::create([
             'title' => $request->title,
             'status' => $request->status ? true : false,
@@ -81,9 +80,11 @@ class PollController extends Controller
      * @param  \App\Models\Poll  $poll
      * @return \Illuminate\Http\Response
      */
-    public function edit(Poll $poll)
+    public function edit(int $id)
     {
-        //
+        session(['currentPoll' => $id]);
+
+        return view('poll.edit');
     }
 
     /**
@@ -93,9 +94,30 @@ class PollController extends Controller
      * @param  \App\Models\Poll  $poll
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePollRequest $request, Poll $poll)
+    public function update(Request $request)
     {
-        //
+        $poll = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->update([
+            'title' => $request->title,
+            'status' => $request->status ? true : false,
+            'slug' => $request->slug,
+        ]);
+
+        Question::where('poll_id', session('currentPoll'))->delete();
+
+        foreach($request->question as $key=>$question)
+        {
+            Question::create([
+                'question' => $question,
+                'answer' => 'x',
+                'type' => $request->type[$key],
+                'order' => $key,
+                'poll_id' => session('currentPoll'),
+            ]);
+        }
+
+        session()->forget('currentPoll');
+
+        return redirect(route('poll.index'));
     }
 
     /**

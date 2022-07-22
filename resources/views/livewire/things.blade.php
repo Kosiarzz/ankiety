@@ -1,7 +1,4 @@
 <div>
-    @foreach($things as $thing)
-        {{ $thing['id'] }}, {{ $thing['title'] }}
-    @endforeach
     <ul wire:sortable="reorder" class="p-0 m-0">
         @foreach($things as $thing)
             <li wire:sortable.item="{{ $thing['id'] }}" draggable="true" wire:key="{{ $thing['id'] }}" class="card mt-3 border">
@@ -12,12 +9,12 @@
                 <div class="card-body">
                     <div class="form-group row align-items-center mb-3">
                         <div class="col-md-7 col-xl-7">
-                            <input type="text" name="question[]" placeholder="Pytanie" class="form-control" aria-required="true" aria-invalid="false">
+                            <input type="text" name="question[]" placeholder="Pytanie" value="{{ $thing['question'] }}" class="form-control" aria-required="true" aria-invalid="false">
                         </div>
                         <div class="col-md-5 col-xl-5">
                             <select class="form-select" name="type[]" aria-label="Default select example">
-                                <option value="radio" selected>Jednokrotny wybór (Tak/Nie)</option>
-                                <option value="text">Odpowiedź tekstowa</option>
+                                <option value="radio" @if($thing['type'] == 'radio') selected @endif>Jednokrotny wybór (Tak/Nie)</option>
+                                <option value="text" @if($thing['type'] == 'text') selected @endif>Odpowiedź tekstowa</option>
                             </select>
                         </div>
                     </div> 
@@ -28,6 +25,7 @@
     <div class="row mt-3">
         <div class="d-flex justify-content-end">
             <button wire:click="$emit('questionAdded')" class="btn btn-primary btn-sm" type="button">Dodaj pytanie</button>
+            <button wire:click="$emit('info')" class="btn btn-info btn-sm" type="button">Info</button>
         </div>
     </div>
 </div>

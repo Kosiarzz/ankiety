@@ -3,18 +3,43 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Poll;
+use Illuminate\Support\Facades\Auth;
 
 class Things extends Component
 {
-    public $things = [
-        ['id' => 1, 'title' => 'Pytanie'],
-        ['id' => 2, 'title' => 'Pytanie'],
-    ];
+    public $things = [];
+    public $dasdas = 0;
 
     protected $listeners = [
         'questionAdded' => 'questionAdded',
         'questionRemove' => 'questionRemove',
+        'info' => 'info',
     ];
+
+    public function boot()
+    {
+        if(session('currentPoll') && request()->routeIs('poll.edit') )
+        {
+            $polls = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->with('questions')->get();
+            
+            $this->things = [];
+
+            foreach($polls as $poll)
+            {
+                foreach($poll->questions as $key => $question)
+                {
+                    $this->things[] = ['id' => $key, 'question' => $question->question, 'type'=>$question->type];
+                }
+            }
+        }
+        else
+        {
+            $this->things[] = ['id' => 1, 'question' => '', 'type' => 'radio'];
+        }
+
+        $this->dasdas = count($this->things);
+    }
 
     public function reorder($orderedIds)
     {
@@ -25,13 +50,24 @@ class Things extends Component
 
     public function questionAdded()
     {
-        array_push($this->things, ['id' => count($this->things) + 1, 'title' => 'Pytanie']);
+        array_push($this->things, ['id' => $this->dasdas++, 'question' => '', 'type' => 'radio']);
+    }
+
+    public function info()
+    {
+       dd($this->things);
     }
 
     public function questionRemove(int $id)
     {
-        #dd($this->things[$id-1]);
-        unset($this->things[$id-1]);
+        foreach($this->things as $key => $thing)
+        {
+            if($thing['id'] == $id)
+            {
+                unset($this->things[$key]);
+                break;
+            }
+        }
     }
 
     public function render()

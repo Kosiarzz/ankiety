@@ -15,4 +15,9 @@ class Poll extends Model
         'slug',
         'user_id',
     ];
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }
