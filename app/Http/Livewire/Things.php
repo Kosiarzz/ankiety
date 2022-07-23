@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class Things extends Component
 {
     public $things = [];
-    public $dasdas = 0;
+    public $items = 0;
 
     protected $listeners = [
         'questionAdded' => 'questionAdded',
@@ -19,30 +19,30 @@ class Things extends Component
 
     public function boot()
     {
-        if(old('question'))
+        if(old())
         {   
             foreach(old('question') as $key => $question)
             {
                 $this->things[] = ['id' => $key, 'question' => old('question')[$key], 'type'=>old('type')[$key]];
             }
         }
-
-        if(session('currentPoll') && request()->routeIs('poll.edit') )
+        else if(session('currentPoll') && request()->routeIs('poll.edit') )
         {
-            $polls = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->with('questions')->get();
+            $poll = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->with('questions')->get();
             
             $this->things = [];
+            $this->title = $poll[0]->title;
+            $this->slug = $this->original_slug = $poll[0]->slug;
+            $this->status = $poll[0]->status;
 
-            foreach($polls as $poll)
+            foreach($poll[0]->questions as $key => $question)
             {
-                foreach($poll->questions as $key => $question)
-                {
-                    $this->things[] = ['id' => $key, 'question' => $question->question, 'type'=>$question->type];
-                }
+                $this->things[] = ['id' => $key, 'question' => $question->question, 'type'=>$question->type];
             }
+            
         }
 
-        $this->dasdas = count($this->things);
+        $this->items = count($this->things);
     }
 
     public function reorder($orderedIds)
@@ -54,7 +54,7 @@ class Things extends Component
 
     public function questionAdded()
     {
-        array_push($this->things, ['id' => $this->dasdas++, 'question' => '', 'type' => 'radio']);
+        array_push($this->things, ['id' => $this->items++, 'question' => '', 'type' => 'radio']);
     }
 
     public function questionRemove(int $id)

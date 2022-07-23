@@ -91,12 +91,14 @@ class PollController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePollRequest  $request
+     * @param  \App\Http\Requests\UpsertPollRequest  $request
      * @param  \App\Models\Poll  $poll
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpsertPollRequest $request)
     {
+        $data = $request->validated();
+
         $poll = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->update([
             'title' => $request->title,
             'status' => $request->status ? true : false,

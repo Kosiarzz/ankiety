@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class UpsertPollRequest extends FormRequest
 {
@@ -42,7 +43,12 @@ class UpsertPollRequest extends FormRequest
     {
         return [
             'title' => 'required|max:100',
-            'slug' => 'required|max:200|unique:polls',
+            'slug' => [
+                'required',
+                'string', 
+                'max:200', 
+                Rule::unique('polls', 'slug')->ignore(Auth::id(), 'user_id'),
+            ],
             'status' => Rule::in(['on']),
             'question' => 'required|array|min:1',
             'question.*' => 'required|string|max:100',

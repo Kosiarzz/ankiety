@@ -12,8 +12,8 @@
             <span class="error">{{ $error }}</span>
         </div>
     </div> 
-    <div class="form-check row has-success">
-        <div class="ml-md-auto col-md-10">
+    <div class="form-check row has-success mt-3">
+        <div class="ml-md-auto col-md-5">
             <input id="enabled" type="checkbox" name="status" class="form-check-input" aria-required="false" aria-invalid="false"> 
             <label for="enabled" class="form-check-label">Opublikuj</label>
         </div>

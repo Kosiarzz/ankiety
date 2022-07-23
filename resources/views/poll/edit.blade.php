@@ -20,6 +20,10 @@
         </div>
     </form>
 </div>
-
+<div id="scrap-box-alert" class="box-error-alert">
+    @foreach ($errors->all() as $error)
+      <div class="scrap-alert-message error">{{ $error }}</div>
+    @endforeach
+</div>
 @endsection
 
