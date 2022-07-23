@@ -49,7 +49,7 @@
         </div>
     </form>
     @else
-        <span class="col-12 empty-text text-center"> Ta ankieta jest obecnie niedostępna </span>
+        <span class="col-12 card poll-status text-center"> Ta ankieta jest obecnie niedostępna </span>
     @endif
 </div>
 

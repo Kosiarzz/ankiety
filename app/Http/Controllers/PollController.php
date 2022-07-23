@@ -7,6 +7,7 @@ use App\Http\Requests\{StorePollRequest, UpdatePollRequest};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Exception;
+use Barryvdh\Debugbar\Facades\Debugbar;
 
 class PollController extends Controller
 {
@@ -84,6 +85,20 @@ class PollController extends Controller
     {
         $data = $request->validated();
 
+        $current_slug = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->get('slug');
+        $new_slug = Poll::where('slug', $data['slug'])->exists();
+        
+        if(isset($current_slug[0]->slug) && $new_slug)
+        {
+            if($current_slug[0]->slug != $data['slug'])
+            {
+                //error
+                return redirect()->back()
+                        ->withErrors(['error' => 'Taki adres już istnieje!'])
+                        ->withInput();
+            }
+        }
+
         Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->update([
             'title' => $data['title'],
             'status' => isset($data['status']) ? true : false,
@@ -144,7 +159,9 @@ class PollController extends Controller
     public function destroy(int $id)
     {
         try {
-            Poll::destroy($id);
+            $poll = Poll::where('user_id', Auth::id())->where('id', $id)->firstOrFail();
+            $poll->delete();
+
             return response()->json([
                 'status' => 'success'
             ]);

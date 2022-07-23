@@ -15,6 +15,7 @@ class SlugPolls extends Component
     public $error = '';
     public $status;
 
+    //Runs on every request, before any other lifecycle methods are called
     public function boot()
     {
         $poll = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->get();
@@ -32,6 +33,7 @@ class SlugPolls extends Component
         }
     }
 
+    //Render and checks if the slug already exists
     public function render()
     {
         $issetSlug = Poll::where('slug', Str::slug($this->slug, '-'))->count();

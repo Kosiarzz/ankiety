@@ -17,16 +17,17 @@ class Questions extends Component
         'info' => 'info',
     ];
 
+    //Runs on every request, before any other lifecycle methods are called
     public function boot()
     {
-        if(old('question'))
+        if(old('question')) //if exist old variables
         {   
             foreach(old('question') as $key => $question)
             {
                 $this->questionsArray[] = ['id' => $key, 'question' => old('question')[$key], 'type'=>old('type')[$key]];
             }
         }
-        else if(session('currentPoll') && request()->routeIs('poll.edit') )
+        else if(session('currentPoll') && request()->routeIs('poll.edit') ) //if it is a poll editing page
         {
             $poll = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->with('questions')->get();
             
@@ -45,6 +46,7 @@ class Questions extends Component
         $this->items = count($this->questionsArray);
     }
 
+    //sorting questions
     public function reorder($orderedIds)
     {
         $this->questionsArray = collect($orderedIds)->map(function($id) {
@@ -52,11 +54,13 @@ class Questions extends Component
         })->toArray();
     }
 
+    //add questions
     public function questionAdded()
     {
         array_push($this->questionsArray, ['id' => $this->items++, 'question' => '', 'type' => 'radio']);
     }
 
+    //remove questions
     public function questionRemove(int $id)
     {
         foreach($this->questionsArray as $key => $question)
