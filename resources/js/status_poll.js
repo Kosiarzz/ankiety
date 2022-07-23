@@ -4,7 +4,8 @@ $(document).ready(function(){
         var id = $(this).data("id");
         var status = $(this).data("status")
 
-        console.log(status);
+        $(this).prop('disabled', true);
+        
         $.ajax({
             type: 'post',
             headers: {
@@ -21,14 +22,30 @@ $(document).ready(function(){
                 if(status == "on")
                 {
                     $(time).text("-");
-                    $(this).data("status", "off")
                 }
                 else
                 {
                     $(time).text("Teraz");
-                    $(this).data("status", "on")
                 }
-            }
+
+                item = '<div id="alert" class="scrap-alert-message success">Status został zmieniony</div>';
+                $('#scrap-box-alert').append(item);
+            
+                setTimeout(function(){
+                    $('#alert').remove();
+                }, 3000);
+            },
+            error:function(data){
+                item = '<div id="alert" class="scrap-alert-message error">Błąd podczas zmiany statusu! </div>';
+
+                $('#scrap-box-alert').append(item);
+
+                setTimeout(function(){
+                    $('#alert').remove();
+                }, 3000);
+
+                alertNumber++;
+            },
         });
     
     });

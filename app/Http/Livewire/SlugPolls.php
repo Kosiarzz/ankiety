@@ -13,6 +13,7 @@ class SlugPolls extends Component
     public $original_slug = '';
     public $title;
     public $error = '';
+    public $status = false;
 
     public function boot()
     {

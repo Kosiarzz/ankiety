@@ -12,7 +12,7 @@
                 @livewire('slug-polls')
             </div>
         </div>
-        @livewire('things') 
+        @livewire('questions') 
         <div class="row text-center mt-3 mb-4">
             <div>
                 <button class="btn btn-primary btn-sm" type="submit">Zapisz ankietę</button>
@@ -22,7 +22,7 @@
 </div>
 <div id="scrap-box-alert" class="box-error-alert">
     @foreach ($errors->all() as $error)
-      <div class="scrap-alert-message error">{{ $error }}</div>
+        <div class="scrap-alert-message error">{{ $error }}</div>
     @endforeach
 </div>
 @endsection

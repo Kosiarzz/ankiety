@@ -6,9 +6,9 @@ use Livewire\Component;
 use App\Models\Poll;
 use Illuminate\Support\Facades\Auth;
 
-class Things extends Component
+class Questions extends Component
 {
-    public $things = [];
+    public $questionsArray = [];
     public $items = 0;
 
     protected $listeners = [
@@ -19,51 +19,51 @@ class Things extends Component
 
     public function boot()
     {
-        if(old())
+        if(old('question'))
         {   
             foreach(old('question') as $key => $question)
             {
-                $this->things[] = ['id' => $key, 'question' => old('question')[$key], 'type'=>old('type')[$key]];
+                $this->questionsArray[] = ['id' => $key, 'question' => old('question')[$key], 'type'=>old('type')[$key]];
             }
         }
         else if(session('currentPoll') && request()->routeIs('poll.edit') )
         {
             $poll = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->with('questions')->get();
             
-            $this->things = [];
+            $this->questionsArray = [];
             $this->title = $poll[0]->title;
             $this->slug = $this->original_slug = $poll[0]->slug;
             $this->status = $poll[0]->status;
 
             foreach($poll[0]->questions as $key => $question)
             {
-                $this->things[] = ['id' => $key, 'question' => $question->question, 'type'=>$question->type];
+                $this->questionsArray[] = ['id' => $key, 'question' => $question->question, 'type'=>$question->type];
             }
             
         }
 
-        $this->items = count($this->things);
+        $this->items = count($this->questionsArray);
     }
 
     public function reorder($orderedIds)
     {
-        $this->things = collect($orderedIds)->map(function($id) {
-            return collect($this->things)->where('id', (int) $id['value'])->first();
+        $this->questionsArray = collect($orderedIds)->map(function($id) {
+            return collect($this->questionsArray)->where('id', (int) $id['value'])->first();
         })->toArray();
     }
 
     public function questionAdded()
     {
-        array_push($this->things, ['id' => $this->items++, 'question' => '', 'type' => 'radio']);
+        array_push($this->questionsArray, ['id' => $this->items++, 'question' => '', 'type' => 'radio']);
     }
 
     public function questionRemove(int $id)
     {
-        foreach($this->things as $key => $thing)
+        foreach($this->questionsArray as $key => $question)
         {
-            if($thing['id'] == $id)
+            if($question['id'] == $id)
             {
-                unset($this->things[$key]);
+                unset($this->questionsArray[$key]);
                 break;
             }
         }
@@ -71,6 +71,6 @@ class Things extends Component
 
     public function render()
     {
-        return view('livewire.things');
+        return view('livewire.questions');
     }
 }
