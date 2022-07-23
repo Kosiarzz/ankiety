@@ -31,6 +31,15 @@ class EntryController extends Controller
      */
     public function store(Request $request)
     {
+        foreach($request->answerId as $key => $answer)
+        {
+            if(empty($request['answer'.$key]) || strlen($request['answer'.$key]) > 100)
+            {
+                return redirect()->back()
+                        ->withErrors(['error' => 'Wystąpił błąd podczas wysyłania ankiety!']);
+            }
+        }
+
         $entry = Entry::create([
             'created_at' => now(),
             'poll_id' => $request->poll_id,
@@ -45,7 +54,7 @@ class EntryController extends Controller
             ]);
         }
 
-        return view('slug.endpoll', ['url' => url()->full()]);
+        return view('slug.endpoll');
     }
 
     /**
