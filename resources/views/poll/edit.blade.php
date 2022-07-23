@@ -11,6 +11,7 @@
             <div class="card-body">
                 @livewire('slug-polls') 
             </div>
+            <i>Wprowadzenie zmian do ankiety spowoduje usunięcie jej statystyk</i>
         </div>
         @livewire('questions') 
         <div class="row text-center mt-3 mb-4">

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Poll, Question};
+use App\Models\{Poll, Question, Entry};
 use App\Http\Requests\{StorePollRequest, UpdatePollRequest};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -106,6 +106,7 @@ class PollController extends Controller
         ]);
 
         Question::where('poll_id', session('currentPoll'))->delete();
+        Entry::where('poll_id', session('currentPoll'))->delete();
 
         foreach($data['question'] as $key=>$question)
         {
