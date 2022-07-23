@@ -74,29 +74,10 @@
                 </ul>
             </div>
         </nav>
-        
-        <div class="sidebar d-flex flex-column flex-shrink-0">
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-                <li>
-                    <a href="{{ route('poll.index') }}" class="nav-link {{ request()->routeIs('poll.index') ? 'active' : '' }}" title="Ankiety">
-                        Ankiety
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('entries.index') }}" class="nav-link {{ request()->routeIs('entries.index') ? 'active' : '' }}" title="Wpisy">
-                        Wpisy
-                    </a>
-                </li>
-            </ul>
-        </div>
-
         <main class="container d-flex justify-content-center py-5 mt-5">
             @yield('content')
         </main>
         @livewireScripts
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
     </div>
 </body>
 </html>

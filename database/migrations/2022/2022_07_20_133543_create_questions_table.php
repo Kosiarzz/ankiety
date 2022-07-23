@@ -17,7 +17,6 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->string('question');
             $table->enum('type', ['radio', 'text']);
-            $table->integer('order');
             $table->timestamps();
             $table->foreignId('poll_id')->constrained('polls')->onDelete('cascade');
         });

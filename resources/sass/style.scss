@@ -1,3 +1,4 @@
+//navbar
 .navbar-logo{
     margin-left:20px;
     font-size:22px;
@@ -6,6 +7,7 @@
     font-weight: 600;
 }
 
+//sidebar
 .sidebar{
     width: 200px;  
     height: 100vh; 
@@ -37,6 +39,7 @@
     border-radius: 0;
 }
 
+//table
 .card{
     border-radius: 0;
 }
@@ -74,8 +77,10 @@ tr:nth-child(even){
     background: #f0f0f0;
 }
 
+
+//alerts
 .error{
-    color:red;
+    color:#c34a43;
 }
 
 .box-error-alert{
@@ -102,4 +107,31 @@ tr:nth-child(even){
 
 .scrap-alert-message.success{
     background: #62ac6a;
+}
+
+
+//Stats answers
+.radio-answer{
+    font-size:16px;
+    font-family: 'Segoe UI';
+}
+
+.radio-answer-count{
+    font-size:18px;
+    font-weight: 600;
+}
+
+.text-answer{
+    font-size:16px;
+    font-family: 'Segoe UI';
+}
+
+.text-answer-count{
+    font-size:18px;
+    font-weight: 600;
+}
+
+//empty 
+.empty-text{
+    font-size:20px;
 }

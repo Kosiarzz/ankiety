@@ -45,18 +45,17 @@ class PollController extends Controller
         $data = $request->validated();
 
         $poll = Poll::create([
-            'title' => $request->title,
-            'status' => $request->status ? true : false,
-            'slug' => Str::slug($request->slug, '-'),
+            'title' => $data['title'],
+            'status' => $data['status'] ? true : false,
+            'slug' => Str::slug($data['slug'], '-'),
             'user_id' => Auth::id(),
         ]);
 
-        foreach($request->question as $key=>$question)
+        foreach($data['question'] as $key=>$question)
         {
             Question::create([
                 'question' => $question,
-                'type' => $request->type[$key],
-                'order' => $key,
+                'type' => $data['type'][$key],
                 'poll_id' => $poll->id,
             ]);
         }
@@ -99,20 +98,19 @@ class PollController extends Controller
     {
         $data = $request->validated();
 
-        $poll = Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->update([
-            'title' => $request->title,
-            'status' => $request->status ? true : false,
-            'slug' => $request->slug,
+        Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->update([
+            'title' => $data['title'],
+            'status' => $data['status'] ? true : false,
+            'slug' => Str::slug($data['slug'], '-'),
         ]);
 
         Question::where('poll_id', session('currentPoll'))->delete();
 
-        foreach($request->question as $key=>$question)
+        foreach($data['question'] as $key=>$question)
         {
             Question::create([
                 'question' => $question,
-                'type' => $request->type[$key],
-                'order' => $key,
+                'type' => $data['type'][$key],
                 'poll_id' => session('currentPoll'),
             ]);
         }
@@ -123,45 +121,29 @@ class PollController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the stats poll.
      *
+     * @param int $id - id poll
      * @return \Illuminate\Http\Response
      */
     public function stats(int $id)
     {
         $poll = Poll::where('user_id', Auth::id())->where('id', $id)->with('questions.answers')->get();
         
-        #$entries = Entry::where('poll_id', $id)->get('id');
-        #$answers = Answer::whereIn('entry_id', $entries)->get();
-        
-        #$yes = Answer::whereIn('entry_id', $entries)->where('answer', 'Tak')->count ();
-        
-        #$text = $answers->whereNot(function ($query) {
-        #    $query->where('answer', 'Yes')
-        #          ->orWhere('answer', 'No');
-        #});
-
-       
-        #$stats = $poll->questions->answers->groupBy('answer')->map->count();
-        
-   
-
         return view('poll.stats', [
             'poll' => $poll
         ]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Changing the poll status
      *
-     * @param  \App\Models\Poll  $poll
+     * @param  int $id - id poll
+     * @param  string $status - new status poll
      * @return \Illuminate\Http\Response
      */
     public function status(int $id, string $status)
     {
-        Debugbar::info($status);
-        Debugbar::info($id);
-
         Poll::where('user_id', Auth::id())->where('id', $id)->update([
             'status' => $status == "on" ? false : true,
         ]);
@@ -175,7 +157,6 @@ class PollController extends Controller
      */
     public function destroy(int $id)
     {
-        Debugbar::info($id);
         Poll::destroy($id);
     }
 }

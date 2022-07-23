@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\{Entry, Poll, Answer};
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Support\Facades\Auth;
 
 class EntryController extends Controller
 {
@@ -15,7 +16,9 @@ class EntryController extends Controller
      */
     public function index()
     {
-        $entries = Entry::with('poll')->get();
+        $entries = Entry::whereHas('poll', function($query){
+            $query->where('user_id', Auth::id());
+        })->orderBy('id', 'desc')->paginate(10);
 
         return view('entries.index', ['entries' => $entries]);
     }

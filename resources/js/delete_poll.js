@@ -14,6 +14,7 @@ $(document).ready(function(){
             },
             success: function (response) {
                 var remove = "#poll"+id;
+                $(remove).remove();
 
                 item = '<div id="alert" class="scrap-alert-message success">Ankieta została usunięta</div>';
                 $('#scrap-box-alert').append(item);
@@ -21,8 +22,6 @@ $(document).ready(function(){
                 setTimeout(function(){
                     $('#alert').remove();
                 }, 3000);
-
-                $(remove).remove();
             },
             error:function(data){
                 item = '<div id="alert" class="scrap-alert-message error">Błąd podczas usuwania ankiety! </div>';

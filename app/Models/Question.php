@@ -11,9 +11,7 @@ class Question extends Model
 
     protected $fillable = [
         'question',
-        'answer',
         'type',
-        'order',
         'poll_id',
     ];
 

@@ -69,7 +69,7 @@
                             </td>
                         </tr>
                     @empty
-                        Brak ankiet
+                        <span class="empty-text"> Brak ankiet </span>
                     @endforelse
                 </tbody>
             </table>    

@@ -14,9 +14,24 @@ $(document).ready(function(){
             },
             success: function (response) {
                 var remove = "#entry"+id;
-                console.log(remove);
                 $(remove).remove();
-            }
+
+                item = '<div id="alert" class="scrap-alert-message success">Wpis został usunięty</div>';
+                $('#scrap-box-alert').append(item);
+            
+                setTimeout(function(){
+                    $('#alert').remove();
+                }, 3000);
+            },
+            error:function(data){
+                item = '<div id="alert" class="scrap-alert-message error">Błąd podczas usuwania wpisu! </div>';
+
+                $('#scrap-box-alert').append(item);
+
+                setTimeout(function(){
+                    $('#alert').remove();
+                }, 3000);
+            },
         });
     
     });
