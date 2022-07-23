@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="col-8">
+    @if(!isset($status))
     <div class="card">
         <div class="card-header bg-white" style="font-size:30px;">
             {{ $poll[0]->title }}
@@ -19,20 +20,20 @@
                         </div> 
                         @if ($question->type == "radio")
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="answer{{ $loop->index }}" value="Tak" id="yesRadio{{ $loop->index }}">
-                                <label class="form-check-label" for="yesRadio{{ $loop->index }}">
+                                <input class="form-check-input" type="radio" name="answer{{ $loop->index }}" value="Tak" id="yesRadio{{ $loop->index }}" required>
+                                <label class="form-check-label" for="yesRadio{{ $loop->index }}" required>
                                 Tak
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="answer{{ $loop->index }}" value="Nie" id="noRadio{{ $loop->index }}">
-                                <label class="form-check-label" for="noRadio{{ $loop->index }}">
+                                <input class="form-check-input" type="radio" name="answer{{ $loop->index }}" value="Nie" id="noRadio{{ $loop->index }}" required>
+                                <label class="form-check-label" for="noRadio{{ $loop->index }}" required>
                                 Nie
                                 </label>
                             </div>
                         @else
                             <div class="col-8 input-group mb-2">
-                                <input type="text" class="form-control" placeholder="Odpowiedź" name="answer{{ $loop->index }}">
+                                <input type="text" maxlength="100" class="form-control" placeholder="Odpowiedź" name="answer{{ $loop->index }}" required>
                             </div>
                         @endif
                     </div>
@@ -47,6 +48,9 @@
             </div>
         </div>
     </form>
+    @else
+        <span class="col-12 empty-text text-center"> Ta ankieta jest obecnie niedostępna </span>
+    @endif
 </div>
 
 @endsection

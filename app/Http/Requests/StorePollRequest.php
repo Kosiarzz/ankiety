@@ -4,9 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
-class UpsertPollRequest extends FormRequest
+class StorePollRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -47,7 +47,7 @@ class UpsertPollRequest extends FormRequest
                 'required',
                 'string', 
                 'max:200', 
-                Rule::unique('polls', 'slug')->ignore(Auth::id(), 'user_id'),
+                Rule::unique('polls', 'slug'),
             ],
             'status' => Rule::in(['on']),
             'question' => 'required|array|min:1',
@@ -57,5 +57,17 @@ class UpsertPollRequest extends FormRequest
                 Rule::in(['radio', 'text']),
             ],
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'slug' => Str::slug($this->slug),
+        ]);
     }
 }

@@ -9,10 +9,10 @@
                 <div class="card-body">
                     <div class="form-group row align-items-center mb-3">
                         <div class="col-md-7 col-xl-7">
-                            <input type="text" name="question[]" placeholder="Pytanie" value="{{ $question['question'] }}" class="form-control" aria-required="true" aria-invalid="false">
+                            <input type="text" name="question[]" maxlength="100" placeholder="Pytanie" value="{{ $question['question'] }}" class="form-control" aria-required="true" aria-invalid="false" required>
                         </div>
                         <div class="col-md-5 col-xl-5">
-                            <select class="form-select" name="type[]" aria-label="Default select example">
+                            <select class="form-select" name="type[]" aria-label="Default select example" required>
                                 <option value="radio" @if($question['type'] == 'radio') selected @endif>Jednokrotny wybór (Tak/Nie)</option>
                                 <option value="text" @if($question['type'] == 'text') selected @endif>Odpowiedź tekstowa</option>
                             </select>

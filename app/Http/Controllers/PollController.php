@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Poll, Question, Entry, Answer};
-use App\Http\Requests\UpsertPollRequest;
-use Illuminate\Http\Request;
+use App\Models\{Poll, Question};
+use App\Http\Requests\{StorePollRequest, UpdatePollRequest};
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Str;
-
+use Exception;
 
 class PollController extends Controller
 {
@@ -37,16 +35,16 @@ class PollController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\UpsertPollRequest  $request
+     * @param  \App\Http\Requests\StorePollRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UpsertPollRequest $request)
+    public function store(StorePollRequest $request)
     {
         $data = $request->validated();
 
         $poll = Poll::create([
             'title' => $data['title'],
-            'status' => $data['status'] ? true : false,
+            'status' => isset($data['status']) ? true : false,
             'slug' => Str::slug($data['slug'], '-'),
             'user_id' => Auth::id(),
         ]);
@@ -61,17 +59,6 @@ class PollController extends Controller
         }
 
         return redirect(route('poll.index'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Poll  $poll
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Poll $poll)
-    {
-        //
     }
 
     /**
@@ -90,17 +77,16 @@ class PollController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpsertPollRequest  $request
-     * @param  \App\Models\Poll  $poll
+     * @param  \App\Http\Requests\UpdatePollRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(UpsertPollRequest $request)
+    public function update(UpdatePollRequest $request)
     {
         $data = $request->validated();
 
         Poll::where('user_id', Auth::id())->where('id', session('currentPoll'))->update([
             'title' => $data['title'],
-            'status' => $data['status'] ? true : false,
+            'status' => isset($data['status']) ? true : false,
             'slug' => Str::slug($data['slug'], '-'),
         ]);
 
@@ -157,6 +143,16 @@ class PollController extends Controller
      */
     public function destroy(int $id)
     {
-        Poll::destroy($id);
+        try {
+            Poll::destroy($id);
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Wystąpił błąd!'
+            ])->setStatusCode(500);
+        }
     }
 }

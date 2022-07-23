@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Entry, Poll, Answer};
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class EntryController extends Controller
 {
@@ -21,16 +21,6 @@ class EntryController extends Controller
         })->orderBy('id', 'desc')->paginate(10);
 
         return view('entries.index', ['entries' => $entries]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -53,46 +43,27 @@ class EntryController extends Controller
                 'question_id' => $answer,
                 'entry_id' => $entry->id,
             ]);
-
         }
 
-        return redirect()->back();
+        return view('slug.endpoll', ['url' => url()->full()]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(string $slug)
     {
         $poll = Poll::where('slug', $slug)->with('questions')->get();
 
-        return view('slug.poll', compact('poll'));
-    }
+        if($poll[0]->status)
+        {
+            return view('slug.poll', compact('poll'));
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return view('slug.poll', ['status' => false]);
     }
 
     /**
@@ -103,7 +74,16 @@ class EntryController extends Controller
      */
     public function destroy($id)
     {
-        Debugbar::info($id);
-        Entry::destroy($id);
+        try {
+            Entry::destroy($id);
+            return response()->json([
+                'status' => 'success'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Wystąpił błąd!'
+            ])->setStatusCode(500);
+        }
     }
 }
